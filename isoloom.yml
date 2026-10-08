@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# write-flag-where2 (Google's 2023 security competition, by Google; a pwn challenge) as an Isoloom spec:
+# the sequel to write-flag-where, the same flag-writing primitive with the helpful output removed.
+# The challenge folder 2023/quals/pwn-write-flag-where2 of Google's challenge archive is vendored unchanged in build/challenge/app/ and built by the overlay Dockerfile next to it.
+# `isoloom generate`, then `isoloom run docker`.
+version: 1
+name: google-ctf-2023-write-flag-where2
+
+networks:
+  lab: { cidr: 10.60.176.0/24, internet: false }
+
+machines:
+  challenge:
+    networks: { lab: 10 }
+    services: [{ port: 1337, name: challenge, publish: 1337 }]
+    resources: { cpus: 1, memory_mb: 512 }
+    privileged: true  # the image's setup script mounts /proc and nsjail creates namespaces
+    docker:
+      build: build/challenge
+
+checks:
+  - name: the challenge service answers
+    tcp: challenge:1337
+    wait: 120
+  - name: the program greets with its rhyme and its memory mappings
+    script: checks/probe.sh
+    wait: 60
+
+message: |
+  write-flag-where2 (Google, 2023) answers at `nc localhost {{ machines.challenge.services.0.publish }}`.
+  Same primitive as before, less output: which bytes of the program can the flag overwrite to change what it does?
