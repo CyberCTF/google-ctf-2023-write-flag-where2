@@ -1,0 +1,59 @@
+{
+  "objectives": [
+    {
+      "key": "main",
+      "title": "Read the flag",
+      "prompt": "Use the same write primitive, with less output, to make the program print the flag.",
+      "check": {
+        "evidence": "SECRET",
+        "format": "CTF{%s}"
+      },
+      "dev": "CTF{dev-google-ctf-2023-write-flag-where2}",
+      "hints": [
+        "The writes go through a file that ignores page protections.",
+        "Which bytes of the program could the flag overwrite to change what it does?"
+      ],
+      "steps": [
+        {
+          "key": "file",
+          "title": "Find the write path",
+          "prompt": "Through which procfs file does the program write, ignoring page protections?",
+          "check": {
+            "answer": [
+              "/proc/self/mem",
+              "mem",
+              "proc/self/mem"
+            ]
+          }
+        },
+        {
+          "key": "region",
+          "title": "Pick the region",
+          "prompt": "Which section of the program can therefore be overwritten even though it is read-only and executable?",
+          "check": {
+            "answer": [
+              "text",
+              ".text",
+              "code",
+              "the code",
+              "text section"
+            ]
+          }
+        },
+        {
+          "key": "primitive",
+          "title": "Name the primitive",
+          "prompt": "What is the general name of a primitive that writes data at an address you choose?",
+          "check": {
+            "answer": [
+              "write-what-where",
+              "write what where",
+              "arbitrary write",
+              "write-where"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
