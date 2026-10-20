@@ -1,8 +1,11 @@
 {
+  "project_name": "cyberlabs-google-ctf-2023-write-flag-where2",
+  "slug": "google-ctf-2023-write-flag-where2",
   "title": "Google CTF 2023: write-flag-where2",
   "description": "The sequel to write-flag-where: the same flag-writing primitive with the helpful output removed.",
-  "question": "With less output than before, use the flag-writing primitive to make the program print the flag.",
-  "category": "PWN",
+  "category": "pwn",
   "difficulty": 3,
-  "evidence_kind": "SECRET"
+  "evidence_kind": "SECRET",
+  "capabilities": [],
+  "question": "With less output than before, use the flag-writing primitive to make the program print the flag."
 }
